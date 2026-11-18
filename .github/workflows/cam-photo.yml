@@ -26,16 +26,26 @@ jobs:
         run: |
           set -x
           mkdir -p photos
+
+          curl -L -sS \
+            -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36" \
+            -e "https://www.a-telecom.ru/smotrite-ledohod-onlajn/" \
+            -o playlist.m3u8 \
+            "https://cam.a-telecom.ru/Sangary_Sever/tracks-v1/index.fmp4.m3u8"
+
+          echo "----- PLAYLIST -----"
+          cat playlist.m3u8
+
           FILE="photos/$(date -u +%Y-%m-%d_%H-%M-%S).jpg"
 
           ffmpeg -y \
             -user_agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36" \
             -headers $'Referer: https://www.a-telecom.ru/smotrite-ledohod-onlajn/\r\nOrigin: https://www.a-telecom.ru\r\n' \
-            -i "https://cam.a-telecom.ru/Sangary_Sever/tracks-v1/index.fmp4.m3u8" \
+            -live_start_index -3 \
+            -i "playlist.m3u8" \
             -frames:v 1 -q:v 2 \
             "$FILE"
 
-          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
           ls -lah photos || true
 
       - name: Commit photo
