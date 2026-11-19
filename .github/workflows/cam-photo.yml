@@ -27,14 +27,26 @@ jobs:
           set -x
           mkdir -p photos
 
+          BASE="https://cam.a-telecom.ru/Sangary_Sever/tracks-v1/"
+          PLAYLIST_URL="${BASE}index.fmp4.m3u8"
+
           curl -L -sS \
             -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36" \
             -e "https://www.a-telecom.ru/smotrite-ledohod-onlajn/" \
             -o playlist.m3u8 \
-            "https://cam.a-telecom.ru/Sangary_Sever/tracks-v1/index.fmp4.m3u8"
+            "$PLAYLIST_URL"
 
-          echo "----- PLAYLIST -----"
+          echo "----- ORIGINAL PLAYLIST -----"
           cat playlist.m3u8
+
+          # Делаем все относительные ссылки абсолютными
+          sed -E \
+            -e 's#^(#EXT-X-MAP:URI=")([^/"].*")$#\1'"$BASE"'\2#' \
+            -e 's#^(seg-[^\r]+)$#'"$BASE"'\1#' \
+            playlist.m3u8 > playlist_absolute.m3u8
+
+          echo "----- ABSOLUTE PLAYLIST -----"
+          cat playlist_absolute.m3u8
 
           FILE="photos/$(date -u +%Y-%m-%d_%H-%M-%S).jpg"
 
@@ -42,7 +54,7 @@ jobs:
             -user_agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36" \
             -headers $'Referer: https://www.a-telecom.ru/smotrite-ledohod-onlajn/\r\nOrigin: https://www.a-telecom.ru\r\n' \
             -live_start_index -3 \
-            -i "playlist.m3u8" \
+            -i "playlist_absolute.m3u8" \
             -frames:v 1 -q:v 2 \
             "$FILE"
 
