@@ -40,27 +40,27 @@ jobs:
           cat playlist.m3u8
 
           python3 - <<'PY'
-from pathlib import Path
-import re
+          from pathlib import Path
+          import re
 
-base = "https://cam.a-telecom.ru/Sangary_Sever/tracks-v1/"
-text = Path("playlist.m3u8").read_text(encoding="utf-8")
+          base = "https://cam.a-telecom.ru/Sangary_Sever/tracks-v1/"
+          text = Path("playlist.m3u8").read_text(encoding="utf-8")
 
-text = re.sub(
-    r'(#EXT-X-MAP:URI=")([^/"][^"]*)(")',
-    lambda m: m.group(1) + base + m.group(2) + m.group(3),
-    text,
-)
+          text = re.sub(
+              r'(#EXT-X-MAP:URI=")([^/"][^"]*)(")',
+              lambda m: m.group(1) + base + m.group(2) + m.group(3),
+              text,
+          )
 
-text = re.sub(
-    r'^(seg-[^\r\n]+)$',
-    lambda m: base + m.group(1),
-    text,
-    flags=re.MULTILINE,
-)
+          text = re.sub(
+              r'^(seg-[^\r\n]+)$',
+              lambda m: base + m.group(1),
+              text,
+              flags=re.MULTILINE,
+          )
 
-Path("playlist_absolute.m3u8").write_text(text, encoding="utf-8")
-PY
+          Path("playlist_absolute.m3u8").write_text(text, encoding="utf-8")
+          PY
 
           echo "----- ABSOLUTE PLAYLIST -----"
           cat playlist_absolute.m3u8
