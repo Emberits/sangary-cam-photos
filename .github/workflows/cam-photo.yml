@@ -68,6 +68,7 @@ jobs:
           FILE="photos/$(date -u +%Y-%m-%d_%H-%M-%S).jpg"
 
           ffmpeg -y \
+            -protocol_whitelist "file,https,tcp,tls" \
             -user_agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36" \
             -headers $'Referer: https://www.a-telecom.ru/smotrite-ledohod-onlajn/\r\nOrigin: https://www.a-telecom.ru\r\n' \
             -live_start_index -3 \
