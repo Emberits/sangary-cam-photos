@@ -66,21 +66,19 @@ jobs:
 
           FILE="photos/$(date -u +%Y-%m-%d_%H-%M-%S).jpg"
 
-          ffmpeg -y \
           timeout 90s ffmpeg -y -hide_banner \
             -protocol_whitelist "file,https,tcp,tls" \
             -extension_picky 0 \
-            -user_agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36" \
-            -headers $'Referer: https://www.a-telecom.ru/smotrite-ledohod-onlajn/\r\nOrigin: https://www.a-telecom.ru\r\n' \
             -live_start_index -3 \
             -i "playlist_absolute.m3u8" \
-            -map 0:v:0 -frames:v 1 -q:v 2 \
+            -map 0:v:0 \
+            -frames:v 1 \
+            -q:v 2 \
             -update 1 \
             "$FILE"
 
           test -s "$FILE"
-
-          ls -lah photos || true
+          ls -lh "$FILE"
 
       - name: Commit photo
         if: steps.capture.outcome == 'success'
