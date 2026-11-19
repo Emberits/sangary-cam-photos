@@ -2,7 +2,7 @@ name: Save camera photo hourly
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
