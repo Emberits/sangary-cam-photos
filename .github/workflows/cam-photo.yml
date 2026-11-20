@@ -2,7 +2,7 @@ name: Save camera photo hourly
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -11,6 +11,8 @@ permissions:
 jobs:
   snapshot:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,7 +31,9 @@ jobs:
           BASE="https://cam.a-telecom.ru/Sangary_Sever/tracks-v1/"
           PLAYLIST_URL="${BASE}index.fmp4.m3u8"
 
-          curl -L -sS \
+          curl --fail --location --silent --show-error \
+            --connect-timeout 10 \
+            --max-time 30 \
             -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36" \
             -e "https://www.a-telecom.ru/smotrite-ledohod-onlajn/" \
             -o playlist.m3u8 \
@@ -66,9 +70,11 @@ jobs:
 
           FILE="photos/$(date -u +%Y-%m-%d_%H-%M-%S).jpg"
 
-          timeout 90s ffmpeg -y -hide_banner \
+          timeout --kill-after=10s 90s ffmpeg -nostdin -y -hide_banner \
             -protocol_whitelist "file,https,tcp,tls" \
             -extension_picky 0 \
+            -analyzeduration 15000000 \
+            -probesize 15000000 \
             -live_start_index -3 \
             -i "playlist_absolute.m3u8" \
             -map 0:v:0 \
@@ -76,6 +82,9 @@ jobs:
             -q:v 2 \
             -update 1 \
             "$FILE"
+
+          test -s "$FILE"
+          ls -lh "$FILE"
 
           test -s "$FILE"
           ls -lh "$FILE"
