@@ -1,0 +1,11 @@
+# Temporal chain test: 09:01, 10:01, 11:01 on 23 November
+
+At 16:00 +09 on 2026-11-23 the user approved all three cyan/orange pairs in the lower row of temporal_09_10_11_review.png. Approval applies to the uploaded 2026-11-23_11-01-54.jpg attachment, upper conductor only. It does not approve other frames or automatically replace earlier approved results.
+
+Attachment: 1280x720, 473317 bytes. SHA-256: 7b7724b8fdd838a6c4fefa846e5c1b2b004c7539795762d3a5e62c55d50670cb. Computed Git blob SHA-1: 14fa0bd7b6bad469c08e45232c8cf0466e42bf52. GitHub connector reports f72f4c8856713c162a28fb82647f93b8f728fc37 for photos/2026-11-23_11-01-54.jpg on main. These do not match. The cause is unknown and pixel equivalence is untested. Do not substitute the repository file by filename alone. The same mismatch was already recorded for 10:01. The attachment is not added by this commit.
+
+For 09:01 to 10:01 the nine forward tests selected zero displacement; correlation was 0.931-0.945 and reverse-cycle error was 0 px. For 10:01 to 11:01 all nine tests also selected zero displacement; correlation was 0.841-0.890 and reverse-cycle error was 0 px. These statements use a 0.5 px grid and do not prove subpixel immobility.
+
+A direct 09:01 to 11:01 comparison was less reliable: correlation was 0.733-0.838, one test reached an 8 px along-wire search limit and maximum reverse-cycle error was 2.5 px. At the 6 px template size the direct and chained positions differed by 0.5 px for windows 1 and 2 and 0 px for window 3. Direct long-interval matching is therefore not accepted without validation. Chaining through the intermediate frame also remains unvalidated; the observed cycle consistency is not proof of correctness.
+
+The three 11:01 widths were independently extracted with the reviewed gradient rule and are not copied from earlier frames: 3.875, 4.500 and 4.875 px. Signed offsets are normal to chained 09:01-derived axes, not image y. Those axes originated from the earlier manual diagnostic. Differences of 0.125-0.375 px between frames are not interpreted as frost growth. No mm conversion, visibility classifier, general tracker or production integration is added. Code and control PNG are not included in this commit; this is an approval/provenance record, not a replay package. Existing code, calibration, main, photos and workflows are unchanged.
