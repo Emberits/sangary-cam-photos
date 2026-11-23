@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "status": "experimental",
+  "reference_image": "2026-11-22_09-01-29.jpg",
+  "primary_reference": "spiral_outer_diameter",
+  "spiral_diameter_mm": 130.0,
+  "wire_12mm_used": false,
+  "units": "original_image_pixels",
+  "source": "User marks in clean_reference_annotation.jpg; rounded digitization from analysis, not raw endpoints",
+  "green_width_px": {"1": 3.840, "2": 4.962, "3": 5.956},
+  "bare_width_px": {
+    "upper": {"1": 1.511, "2": 1.865, "3": 2.308},
+    "lower": {"1": 1.626, "2": 1.803, "3": 1.851}
+  },
+  "scope": "upper/lower refer to position in annotation, not historical wire IDs",
+  "scale_transfer": "No transfer to lower conductor or other windows",
+  "geometry_verified": false
+}
