@@ -1,0 +1,4 @@
+image,position,window,upper_normal_px,lower_normal_px,width_px,contour_status,source_sha256
+2026-11-23_10-01-55.jpg,upper,1,-1.375,2.375,3.75,user_approved_2026-11-23T15:43+09:00,074e36e86224ccd20890ff3c4166cbf48d757abb2a45c38be8a9ddf74d044fa1
+2026-11-23_10-01-55.jpg,upper,2,-1.75,2.625,4.375,user_approved_2026-11-23T15:43+09:00,074e36e86224ccd20890ff3c4166cbf48d757abb2a45c38be8a9ddf74d044fa1
+2026-11-23_10-01-55.jpg,upper,3,-2.125,2.375,4.5,user_approved_2026-11-23T15:43+09:00,074e36e86224ccd20890ff3c4166cbf48d757abb2a45c38be8a9ddf74d044fa1
