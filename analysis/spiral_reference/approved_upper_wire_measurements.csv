@@ -1,0 +1,7 @@
+image,position,window,outer_width_px,bare_width_px,spiral_width_px,mm_per_px,diameter_increase_mm,symmetric_equivalent_mm,contour_status,scale_status
+2026-11-23_09-01-27.jpg,upper,1,3.625000,1.510790,3.840242,33.852033,71.570313,35.785157,user_approved,nearby_local_reference_assumption
+2026-11-23_09-01-27.jpg,upper,2,4.500000,1.864734,4.961581,26.201326,69.047459,34.523729,user_approved,nearby_local_reference_assumption
+2026-11-23_09-01-27.jpg,upper,3,4.500000,2.308465,5.955502,21.828555,47.838045,23.919022,user_approved,nearby_local_reference_assumption
+2026-11-20_15-01-35.jpg,upper,1,2.375000,1.510790,3.840242,33.852033,29.255272,14.627636,user_approved,nearby_local_reference_assumption
+2026-11-20_15-01-35.jpg,upper,2,3.625000,1.864734,4.961581,26.201326,46.121299,23.060649,user_approved,nearby_local_reference_assumption
+2026-11-20_15-01-35.jpg,upper,3,8.375000,2.308465,5.955502,21.828555,132.423694,66.211847,user_approved,nearby_local_reference_assumption

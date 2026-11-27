@@ -1,0 +1,50 @@
+name: Frost shadow batch
+on:
+  push:
+    branches: [analysis/spiral-130mm-reference]
+    paths:
+      - .github/workflows/frost-shadow.yml
+      - analysis/spiral_reference/shadow_batch.py
+      - analysis/spiral_reference/requirements-shadow.txt
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: frost-shadow-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout experiment code
+        uses: actions/checkout@v4
+        with:
+          path: code
+          persist-credentials: false
+      - name: Checkout archive from main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: archive
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical and rendering dependencies
+        run: python -m pip install -r code/analysis/spiral_reference/requirements-shadow.txt
+      - name: Synthetic checks of existing helpers
+        run: |
+          python code/analysis/spiral_reference/temporal_replay.py --self-test
+          python code/analysis/spiral_reference/conditional_gap.py --self-test
+      - name: Analyse up to eight archived frames from 09:01 on 23 November
+        run: |
+          python code/analysis/spiral_reference/shadow_batch.py             --photos archive/photos --out reports --max-frames 8             --archive-sha "$(git -C archive rev-parse HEAD)"
+      - name: Upload review artifacts, no repository writes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frost-shadow-${{ github.run_id }}-${{ github.run_attempt }}
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 14
